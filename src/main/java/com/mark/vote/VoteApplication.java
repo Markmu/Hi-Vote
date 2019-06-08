@@ -33,6 +33,6 @@ public class VoteApplication implements ApplicationRunner{
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-//		generateArtifacts();
+		generateArtifacts();
 	}
 }

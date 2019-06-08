@@ -40,11 +40,15 @@ public class MD5Util {
         try {
             resultString = new String(origin);
             MessageDigest md = MessageDigest.getInstance("MD5");
-            if (charsetname == null || "".equals(charsetname))
+            if (charsetname == null || "".equals(charsetname)){
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
-            else
+            }
+            else {
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes(charsetname)));
+
+            }
         } catch (Exception exception) {
+            log.error("加密失败-加密方式传参错误");
         }
         return resultString.toUpperCase();
     }
