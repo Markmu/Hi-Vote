@@ -8,10 +8,7 @@ import com.mark.vote.controller.request.RegisterInfo;
 import com.mark.vote.model.UserInfo;
 import com.mark.vote.service.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,7 +22,7 @@ public class UserInfoController {
     private IUserInfoService iUserInfoService;
 
     @PostMapping("/register")
-    public ServerResponse<UserInfo> register(@Valid RegisterInfo registerInfo, HttpSession session) {
+    public ServerResponse<UserInfo> register(@RequestBody RegisterInfo registerInfo, HttpSession session) {
         if (!registerInfo.getPassword().equals(registerInfo.getPasswordAgain())) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
@@ -37,7 +34,7 @@ public class UserInfoController {
     }
 
     @PostMapping("/login")
-    public ServerResponse<UserInfo> login(@Valid LoginRequest loginRequest, HttpSession session) {
+    public ServerResponse<UserInfo> login(@RequestBody @Valid LoginRequest loginRequest, HttpSession session) {
         ServerResponse serverResponse = iUserInfoService.login(loginRequest);
         if (serverResponse.success()) {
             session.setAttribute(Const.CURRENT_USER, serverResponse.getData());
@@ -54,8 +51,8 @@ public class UserInfoController {
         return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
     }
 
-    @GetMapping("/check_email")
-    public ServerResponse checkEmail(@Email String email) {
+    @PostMapping("/check_email")
+    public ServerResponse checkEmail(@Email @RequestBody String email) {
         return iUserInfoService.checkEmail(email);
     }
 

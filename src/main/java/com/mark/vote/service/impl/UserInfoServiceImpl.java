@@ -9,7 +9,9 @@ import com.mark.vote.model.UserInfo;
 import com.mark.vote.service.IUserInfoService;
 import com.mark.vote.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserInfoServiceImpl implements IUserInfoService{
 
     @Autowired
@@ -44,8 +46,9 @@ public class UserInfoServiceImpl implements IUserInfoService{
         String password = MD5Util.MD5EncodeUtf8(loginRequest.getPassword());
         int count = mUserInfoMapper.countByEmailAndPassword(loginRequest.getEmail(), password);
         if (count > 0) {
-            UserInfo info = mUserInfoMapper.selectEmailAndPassword(loginRequest.getEmail(), password);
+            UserInfo info = mUserInfoMapper.selectByEmailAndPassword(loginRequest.getEmail(), password);
             if (info != null) {
+                info.setPassword(null);
                 return ServerResponse.createBySuccess(info);
             }
             return ServerResponse.createByErrorMessage("用户不存在");

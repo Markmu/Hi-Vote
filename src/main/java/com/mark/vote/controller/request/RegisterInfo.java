@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Null;
 
 @Getter
 @Setter
@@ -17,6 +18,6 @@ public class RegisterInfo {
     private String password;
 
     private String passwordAgain;
-
+    @Null
     private String phone;
 }

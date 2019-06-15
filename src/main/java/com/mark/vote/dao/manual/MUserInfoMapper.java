@@ -1,11 +1,7 @@
 package com.mark.vote.dao.manual;
 
 import com.mark.vote.model.UserInfo;
-import com.mark.vote.model.UserInfoExample;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.session.RowBounds;
-
-import java.util.List;
 
 public interface MUserInfoMapper {
 
@@ -35,7 +31,7 @@ public interface MUserInfoMapper {
         "from t_user_info",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    @ResultMap("com.mark.vote.dao.UserInfoMapper.BaseResultMap")
+    @ResultMap("com.mark.vote.dao.manual.MUserInfoMapper.BaseResultMap")
     UserInfo selectByPrimaryKey(Integer id);
 
 
@@ -67,8 +63,8 @@ public interface MUserInfoMapper {
             "where email = #{email, jdbcType=VARCHAR}",
             "and password = #{password, jdbcType=VARCHAR}"
     })
-    int countByEmailAndPassword(String email, String password);
+    int countByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
 
-    UserInfo selectEmailAndPassword(String email, String passwod);
+    UserInfo selectByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 }
