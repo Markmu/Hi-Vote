@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mark.vote.dao.VoteLogMapper">
-  <resultMap id="BaseResultMap" type="com.mark.vote.model.VoteLog">
-
+<mapper namespace="com.mark.vote.dao.VoteTitleMapper">
+  <resultMap id="BaseResultMap" type="com.mark.vote.model.VoteTitle">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="vote_id" jdbcType="INTEGER" property="voteId" />
-    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
-    <result column="vote_item_id" jdbcType="INTEGER" property="voteItemId" />
-    <result column="anoymouse" jdbcType="INTEGER" property="anoymouse" />
+    <result column="theme_id" jdbcType="INTEGER" property="themeId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="img_name" jdbcType="INTEGER" property="imgName" />
+    <result column="vote_max" jdbcType="INTEGER" property="voteMax" />
+    <result column="vote_min" jdbcType="INTEGER" property="voteMin" />
+    <result column="must_vote" jdbcType="INTEGER" property="mustVote" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="vote_time" jdbcType="TIMESTAMP" property="voteTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
-
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -43,7 +43,6 @@
     </where>
   </sql>
   <sql id="Update_By_Example_Where_Clause">
-
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -73,17 +72,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-
-    id, user_id, vote_id, device_id, vote_item_id, anoymouse, create_time, vote_time
+    id, theme_id, title, type, img_name, vote_max, vote_min, must_vote, create_time, 
+    update_time
   </sql>
-  <select id="selectByExample" parameterType="com.mark.vote.model.VoteLogExample" resultMap="BaseResultMap">
-
+  <select id="selectByExample" parameterType="com.mark.vote.model.VoteTitleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_vote_log
+    from t_vote_title
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,100 +89,114 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.mark.vote.model.VoteLogExample">
-
-    delete from t_vote_log
+  <delete id="deleteByExample" parameterType="com.mark.vote.model.VoteTitleExample">
+    delete from t_vote_title
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insertSelective" parameterType="com.mark.vote.model.VoteLog">
-
+  <insert id="insertSelective" parameterType="com.mark.vote.model.VoteTitle">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_vote_log
+    insert into t_vote_title
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
+      <if test="themeId != null">
+        theme_id,
       </if>
-      <if test="voteId != null">
-        vote_id,
+      <if test="title != null">
+        title,
       </if>
-      <if test="deviceId != null">
-        device_id,
+      <if test="type != null">
+        type,
       </if>
-      <if test="voteItemId != null">
-        vote_item_id,
+      <if test="imgName != null">
+        img_name,
       </if>
-      <if test="anoymouse != null">
-        anoymouse,
+      <if test="voteMax != null">
+        vote_max,
+      </if>
+      <if test="voteMin != null">
+        vote_min,
+      </if>
+      <if test="mustVote != null">
+        must_vote,
       </if>
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="voteTime != null">
-        vote_time,
+      <if test="updateTime != null">
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="themeId != null">
+        #{themeId,jdbcType=INTEGER},
       </if>
-      <if test="voteId != null">
-        #{voteId,jdbcType=INTEGER},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="deviceId != null">
-        #{deviceId,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
-      <if test="voteItemId != null">
-        #{voteItemId,jdbcType=INTEGER},
+      <if test="imgName != null">
+        #{imgName,jdbcType=INTEGER},
       </if>
-      <if test="anoymouse != null">
-        #{anoymouse,jdbcType=INTEGER},
+      <if test="voteMax != null">
+        #{voteMax,jdbcType=INTEGER},
+      </if>
+      <if test="voteMin != null">
+        #{voteMin,jdbcType=INTEGER},
+      </if>
+      <if test="mustVote != null">
+        #{mustVote,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="voteTime != null">
-        #{voteTime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.mark.vote.model.VoteLogExample" resultType="java.lang.Long">
-
-    select count(*) from t_vote_log
+  <select id="countByExample" parameterType="com.mark.vote.model.VoteTitleExample" resultType="java.lang.Long">
+    select count(*) from t_vote_title
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-
-    update t_vote_log
+    update t_vote_title
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.themeId != null">
+        theme_id = #{record.themeId,jdbcType=INTEGER},
       </if>
-      <if test="record.voteId != null">
-        vote_id = #{record.voteId,jdbcType=INTEGER},
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.deviceId != null">
-        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
       </if>
-      <if test="record.voteItemId != null">
-        vote_item_id = #{record.voteItemId,jdbcType=INTEGER},
+      <if test="record.imgName != null">
+        img_name = #{record.imgName,jdbcType=INTEGER},
       </if>
-      <if test="record.anoymouse != null">
-        anoymouse = #{record.anoymouse,jdbcType=INTEGER},
+      <if test="record.voteMax != null">
+        vote_max = #{record.voteMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.voteMin != null">
+        vote_min = #{record.voteMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.mustVote != null">
+        must_vote = #{record.mustVote,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.voteTime != null">
-        vote_time = #{record.voteTime,jdbcType=TIMESTAMP},
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -192,56 +204,61 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-
-    update t_vote_log
+    update t_vote_title
     set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      vote_id = #{record.voteId,jdbcType=INTEGER},
-      device_id = #{record.deviceId,jdbcType=VARCHAR},
-      vote_item_id = #{record.voteItemId,jdbcType=INTEGER},
-      anoymouse = #{record.anoymouse,jdbcType=INTEGER},
+      theme_id = #{record.themeId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      img_name = #{record.imgName,jdbcType=INTEGER},
+      vote_max = #{record.voteMax,jdbcType=INTEGER},
+      vote_min = #{record.voteMin,jdbcType=INTEGER},
+      must_vote = #{record.mustVote,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      vote_time = #{record.voteTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mark.vote.model.VoteLog">
-
-    update t_vote_log
+  <update id="updateByPrimaryKeySelective" parameterType="com.mark.vote.model.VoteTitle">
+    update t_vote_title
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="themeId != null">
+        theme_id = #{themeId,jdbcType=INTEGER},
       </if>
-      <if test="voteId != null">
-        vote_id = #{voteId,jdbcType=INTEGER},
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="deviceId != null">
-        device_id = #{deviceId,jdbcType=VARCHAR},
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="voteItemId != null">
-        vote_item_id = #{voteItemId,jdbcType=INTEGER},
+      <if test="imgName != null">
+        img_name = #{imgName,jdbcType=INTEGER},
       </if>
-      <if test="anoymouse != null">
-        anoymouse = #{anoymouse,jdbcType=INTEGER},
+      <if test="voteMax != null">
+        vote_max = #{voteMax,jdbcType=INTEGER},
+      </if>
+      <if test="voteMin != null">
+        vote_min = #{voteMin,jdbcType=INTEGER},
+      </if>
+      <if test="mustVote != null">
+        must_vote = #{mustVote,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="voteTime != null">
-        vote_time = #{voteTime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByExampleWithRowbounds" parameterType="com.mark.vote.model.VoteLogExample" resultMap="BaseResultMap">
-
+  <select id="selectByExampleWithRowbounds" parameterType="com.mark.vote.model.VoteTitleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_vote_log
+    from t_vote_title
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>

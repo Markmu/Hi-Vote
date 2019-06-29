@@ -39,11 +39,15 @@
         </table>
         <table tableName="t_vote_theme" domainObjectName="VoteTheme">
             <property name="useActualColumnNames" value="false"/>
-
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table>
+        <table tableName="t_vote_title" domainObjectName="VoteTitle" >
+            <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
         <table tableName="t_vote_item" domainObjectName="VoteItem">
             <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
         <table tableName="t_vote_log" domainObjectName="VoteLog">
             <property name="useActualColumnNames" value="false"/>
